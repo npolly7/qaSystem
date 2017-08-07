@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.project.mapper.ProjectMapper">
+  
+  	<insert id="create">
+  		insert into
+  			project	(projectCode, projectName, writerId, likeList, regDate, updateDate)
+  		values
+  			(#{projectCode}, #{projectName}, #{writerId}, "", now(), now())
+  			
+  	</insert>
+  	
+  	<select id="selectProject" resultType="com.project.qa.domain.Project">
+		select
+			*
+		from
+			project
+		where
+			projectCode = #{projectCode}
+	</select>
+	
+	<update id="update">
+		update
+			project
+		set
+			projectName = #{projectName}, likeList = #{likeList}, updateDate = now()
+		where
+			projectCode = #{projectCode}
+	</update>
+	
+	<delete id="delete">
+		delete from
+			project
+		where
+			projectCode = #{projectCode}
+	</delete>
+
+	<select id="listAll" resultType="com.project.qa.domain.Project">
+	<![CDATA[
+		select
+			*
+		from
+			project
+		order by projectCode desc, regDate desc
+	]]>
+	</select>	
+  
+  </mapper>
