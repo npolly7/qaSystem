@@ -3,59 +3,72 @@ package com.project.qa.domain;
 import java.util.Date;
 
 public class User {
-	private String userId;
-	private String password;
-	private String userName;
-	private String phoneNum;
-	private Date regDate;
-	private Date updateDate;
+	private int USER_CODE;
+	private String USER_ID;
+	private String USER_PW;
+	private String USER_NAME;
+	private String USER_PHONE;
+	private String USER_BIRTH;
+	private Date WR_DATE;
+	private Date UPDT_DATE;
 	
-	public String getUserId() {
-		return userId;
+	
+	
+	public int getUSER_CODE() {
+		return USER_CODE;
+	}
+	public void setUSER_CODE(int uSER_CODE) {
+		USER_CODE = uSER_CODE;
 	}
 	
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public String getUSER_ID() {
+		return USER_ID;
 	}
-	
-	public String getPassword() {
-		return password;
+	public void setUSER_ID(String uSER_ID) {
+		USER_ID = uSER_ID;
 	}
-	
-	public void setPassword(String password) {
-		this.password = password;
+
+	public String getUSER_PW() {
+		return USER_PW;
 	}
-	
-	public String getUserName() {
-		return userName;
+	public void setUSER_PW(String uSER_PW) {
+		USER_PW = uSER_PW;
 	}
-	
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public String getUSER_NAME() {
+		return USER_NAME;
 	}
-	
-	public String getPhoneNum() {
-		return phoneNum;
+	public void setUSER_NAME(String uSER_NAME) {
+		USER_NAME = uSER_NAME;
 	}
-	
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
+	public String getUSER_PHONE() {
+		return USER_PHONE;
 	}
-	
-	public Date getRegDate() {
-		return regDate;
+	public void setUSER_PHONE(String uSER_PHONE) {
+		USER_PHONE = uSER_PHONE;
 	}
-	
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
+	public String getUSER_BIRTH() {
+		return USER_BIRTH;
 	}
-	
-	public Date getUpdateDate() {
-		return updateDate;
+	public void setUSER_BIRTH(String uSER_BIRTH) {
+		USER_BIRTH = uSER_BIRTH;
 	}
-	
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
+	public Date getWR_DATE() {
+		return WR_DATE;
+	}
+	public void setWR_DATE(Date wR_DATE) {
+		WR_DATE = wR_DATE;
+	}
+	public Date getUPDT_DATE() {
+		return UPDT_DATE;
+	}
+	public void setUPDT_DATE(Date uPDT_DATE) {
+		UPDT_DATE = uPDT_DATE;
+	}
+	@Override
+	public String toString() {
+		return "User [USER_ID=" + USER_ID + ", USER_PW=" + USER_PW + ", USER_NAME="
+				+ USER_NAME + ", USER_PHONE=" + USER_PHONE + ", USER_BIRTH=" + USER_BIRTH + ", WR_DATE=" + WR_DATE
+				+ ", UPDT_DATE=" + UPDT_DATE + "]";
 	}
 	
 }

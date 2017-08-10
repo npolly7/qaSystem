@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import com.project.qa.domain.User;
+import com.project.qa.dto.LoginDto;
 
 @Repository
 public class UserDaoImpl implements UserDao{
@@ -29,17 +30,22 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public User selectUser(String userId) throws Exception {
-		return (User)sqlSession.selectOne(namespace + ".selectUser", userId);
+	public User selectUser(String USER_ID) throws Exception {
+		return (User)sqlSession.selectOne(namespace + ".selectUser", USER_ID);
 	}
 
 	@Override
-	public User selectWithPW(String userId, String password) throws Exception {
+	public User selectWithPW(String USER_ID, String USER_PW) throws Exception {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("userId", userId);
-		paramMap.put("password", password);
+		paramMap.put("USER_ID", USER_ID);
+		paramMap.put("USER_PW", USER_PW);
 		
 		return (User)sqlSession.selectOne(namespace+".selectWithPW", paramMap);
+	}
+	
+	@Override
+	public User login(LoginDto dto) throws Exception {
+		return (User)sqlSession.selectOne(namespace + ".login", dto);
 	}
 
 }

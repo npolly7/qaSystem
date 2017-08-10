@@ -8,32 +8,31 @@
 	<!-- 테스트로 한번 해봄 -->
 	
 	<select id="getTime" resultType="string">
-		select now()
+		SELECT NOW()
 	</select>
 	
 	<insert id="insertUser">
-		insert
-			into
-		user
-			(userId, password, userName, phoneNum, regDate, updateDate)
-		values
-			(#{userId}, #{password}, #{userName}, #{phoneNum}, now(), now())
+		INSERT INTO
+			T_USER_LIST (USER_ID, USER_NAME, USER_PW, USER_PHONE, WR_DATE, UPDT_DATE)
+		VALUES
+			(#{USER_ID}, #{USER_NAME}, #{USER_PW}, #{USER_PHONE}, NOW(), NOW())
 	</insert>
 	
-	<select id="selectUser" resultType="com.project.qa.domain.UserVO">
-		select 
+	<select id="selectUser" resultType="com.project.qa.domain.User">
+		SELECT
 			*
-		from
-			user
-		where id = #{id}
+		FROM
+			T_USER_LIST
+		WHERE USER_ID = #{USER_ID}
 	</select>  
 	
-	<select id="selectWithPW" resultType="com.project.qa.domain.UserVO">
-		select 
+	<select id="login" resultType="com.project.qa.domain.User">
+		SELECT
 			*
-		from
-			user
-		where userId = #{userId} and password = #{password}
-	</select>  
+		FROM
+			T_USER_LIST
+		WHERE
+			USER_ID = #{USER_ID} AND USER_PW = #{USER_PW}
+	</select>
 	
   </mapper>

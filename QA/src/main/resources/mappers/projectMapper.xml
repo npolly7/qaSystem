@@ -6,46 +6,72 @@
   <mapper namespace="com.project.mapper.ProjectMapper">
   
   	<insert id="create">
-  		insert into
-  			project	(projectCode, projectName, writerId, likeList, regDate, updateDate)
-  		values
-  			(#{projectCode}, #{projectName}, #{writerId}, "", now(), now())
+  		INSERT INTO
+  			T_PRJ_LIST	(PRJ_NAME, PM, CLIENT, START_DATE, END_DATE, WR_DATE, UPDT_DATE)
+  		VALUES
+  			(#{PRJ_NAME}, #{PM}, #{CLIENT}, #{START_DATE}, #{END_DATE}, NOW(), NOW())
   			
   	</insert>
   	
   	<select id="selectProject" resultType="com.project.qa.domain.Project">
-		select
+		SELECT
 			*
-		from
-			project
-		where
-			projectCode = #{projectCode}
+		FROM
+			T_PRJ_LIST
+		WHERE
+			PRJ_CODE = #{PRJ_CODE}
 	</select>
 	
 	<update id="update">
-		update
-			project
-		set
-			projectName = #{projectName}, likeList = #{likeList}, updateDate = now()
-		where
-			projectCode = #{projectCode}
+		UPDATE
+			T_PRJ_LIST
+		SET
+			PRJ_NAME = #{PRJ_NAME}, ATT_USER = #{ATT_USER}, UPDT_DATE = now()
+		WHERE
+			PRJ_CODE = #{PRJ_CODE}
 	</update>
 	
 	<delete id="delete">
-		delete from
-			project
-		where
-			projectCode = #{projectCode}
+		DELETE FROM
+			T_PRJ_LIST
+		WHERE
+			PRJ_CODE = #{PRJ_CODE}
 	</delete>
 
 	<select id="listAll" resultType="com.project.qa.domain.Project">
 	<![CDATA[
-		select
+		SELECT
 			*
-		from
-			project
-		order by projectCode desc, regDate desc
+		FROM
+			T_PRJ_LIST
+		ORDER BY PRJ_CODE DESC, WR_DATE DESC
 	]]>
 	</select>	
+	
+	<select id="listCriteria" resultType="com.project.qa.domain.Project">
+	<![CDATA[
+		SELECT
+			*
+		FROM
+			T_PRJ_LIST
+		WHERE
+			PRJ_CODE > 0
+		ORDER BY
+			PRJ_CODE DESC, WR_DATE DESC
+		LIMIT
+			#{pageStart}, #{perPageNum}	
+	]]>
+	</select>
+	
+		<select id="countPaging" resultType="int">
+	<![CDATA[
+		SELECT
+			COUNT(PRJ_CODE)
+		FROM
+			T_PRJ_LIST
+		WHERE
+			PRJ_CODE > 0
+	]]>
+	</select>
   
   </mapper>
