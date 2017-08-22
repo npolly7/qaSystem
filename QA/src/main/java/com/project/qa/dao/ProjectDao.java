@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project.qa.domain.Criteria;
 import com.project.qa.domain.Project;
+import com.project.qa.domain.SearchCriteria;
 
 public interface ProjectDao {
 	
@@ -18,6 +19,10 @@ public interface ProjectDao {
 	public List<Project> listAll() throws Exception;
 	
 	public List<Project> listCriteria(Criteria crieria) throws Exception;
+	
+	public List<Project> listSearch(SearchCriteria criteria) throws Exception;
+	
+	public int listSearchCount(SearchCriteria criteria) throws Exception;
 	
 	public int countPaging(Criteria criteria) throws Exception;
 }

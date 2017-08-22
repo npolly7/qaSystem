@@ -10,9 +10,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-public class LoginInterceptor extends HandlerInterceptorAdapter {
+public class LoginSuccessInterceptor extends HandlerInterceptorAdapter {
 	private static final String LOGIN = "login";
-	private static final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginSuccessInterceptor.class);
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
@@ -25,7 +25,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		if(user != null) {
 			logger.info("new login success");
 			session.setAttribute(LOGIN, user);
-			response.sendRedirect("/");
+			Object dest = session.getAttribute("dest");
+			logger.info((String)dest);
+			response.sendRedirect(dest != null ? (String) dest : "/");
 		}
 	}
 	

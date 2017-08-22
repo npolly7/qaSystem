@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project.qa.domain.Criteria;
 import com.project.qa.domain.Project;
+import com.project.qa.domain.SearchCriteria;
 
 @Repository
 public class ProjectDaoImpl implements ProjectDao {
@@ -53,6 +54,16 @@ public class ProjectDaoImpl implements ProjectDao {
 	public int countPaging(Criteria criteria) throws Exception {
 		
 		return sqlSession.selectOne(namespace +".countPaging", criteria);
+	}
+
+	@Override
+	public List<Project> listSearch(SearchCriteria criteria) throws Exception {
+		return sqlSession.selectList(namespace + ".listSearch", criteria);
+	}
+
+	@Override
+	public int listSearchCount(SearchCriteria criteria) throws Exception {
+		return sqlSession.selectOne(namespace + ".listSearchCount", criteria);
 	}
 
 }

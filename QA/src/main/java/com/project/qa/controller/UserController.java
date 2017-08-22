@@ -1,6 +1,7 @@
 package com.project.qa.controller;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -33,5 +34,20 @@ public class UserController {
 			return;
 		}
 		model.addAttribute("user", user);
+	}
+	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logout(HttpServletRequest request) throws Exception{
+		
+		HttpSession session = request.getSession();
+		
+		session.removeAttribute("login");
+		
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/mypage", method=RequestMethod.GET)
+	public void mypage() throws Exception{
+		
 	}
 }
