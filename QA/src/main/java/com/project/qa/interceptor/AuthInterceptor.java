@@ -34,24 +34,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 		return true;
 	}
 
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-
-		HttpSession session = request.getSession();
-
-		ModelMap modelMap = modelAndView.getModelMap();
-
-		Object user = modelMap.get("user");
-
-		if (user != null) {
-			logger.info("new login success");
-			session.setAttribute(LOGIN, user);
-			Object dest = session.getAttribute("dest");
-			response.sendRedirect(dest != null ? (String) dest : "/");
-		}
-	}
-
 	private void saveDest(HttpServletRequest request) {
 		String uri = request.getRequestURI();
 

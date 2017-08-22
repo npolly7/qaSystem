@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project.qa.domain.Criteria;
 import com.project.qa.domain.Project;
+import com.project.qa.domain.SearchCriteria;
 
 public interface ProjectService {
 	
@@ -20,5 +21,9 @@ public interface ProjectService {
 	public List<Project> listCriteria(Criteria criteria) throws Exception;
 	
 	public int listCountCriteria(Criteria criteria) throws Exception;
+	
+	public List<Project> listSearchCriteria(SearchCriteria criteria) throws Exception;
+	
+	public int listSearchCount(SearchCriteria criteria) throws Exception;
 
 }

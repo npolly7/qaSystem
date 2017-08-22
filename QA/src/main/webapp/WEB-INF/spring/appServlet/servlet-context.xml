@@ -21,16 +21,18 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<beans:bean id="loginInterceptor" class="com.project.qa.interceptor.LoginInterceptor"></beans:bean>
+	<beans:bean id="loginSuccessInterceptor" class="com.project.qa.interceptor.LoginSuccessInterceptor"></beans:bean>
 	<beans:bean id="authInterceptor" class="com.project.qa.interceptor.AuthInterceptor"></beans:bean>
 	
 	<interceptors>
 		<interceptor>
 			<mapping path="/user/loginPost"/>
-			<beans:ref bean="loginInterceptor"/>
+			<beans:ref bean="loginSuccessInterceptor"/>
 		</interceptor>
 		<interceptor>
 			<mapping path="/project/register"/>
+			<mapping path="/user/mypage"/>
+			<mapping path="/project/read"/>
 			<beans:ref bean="authInterceptor"/>
 		</interceptor>
 	</interceptors>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.project.qa.dao.ProjectDao;
 import com.project.qa.domain.Criteria;
 import com.project.qa.domain.Project;
+import com.project.qa.domain.SearchCriteria;
 
 @Service
 public class ProjectServiceImpl implements ProjectService{
@@ -50,6 +51,16 @@ public class ProjectServiceImpl implements ProjectService{
 	public int listCountCriteria(Criteria criteria) throws Exception {
 		
 		return projectDao.countPaging(criteria);
+	}
+
+	@Override
+	public List<Project> listSearchCriteria(SearchCriteria criteria) throws Exception {
+		return projectDao.listSearch(criteria);
+	}
+
+	@Override
+	public int listSearchCount(SearchCriteria criteria) throws Exception {
+		return projectDao.listSearchCount(criteria);
 	}
 
 }

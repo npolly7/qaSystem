@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="include/header.jsp"%>
 <html>
 <head>
@@ -10,10 +9,6 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link href="<c:url value='/resources/css/mainCss.css'/>"
 	rel="stylesheet">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<script>
@@ -47,11 +42,11 @@
 					</select>
 				</div>
 				<div class="col-xs-10">
-					<input type="text" class="form-control col-xs-3" size="10"
+					<input type="text" id="keyword" class="form-control col-xs-3" size="10"
 						placeholder="INSERT KEYWORD" required>
 				</div>
 				<div class="input-group-btn">
-					<button type="button" class="btn btn-success">검색</button>
+					<button type="button" id="searchBtn" class="btn btn-success">검색</button>
 				</div>
 
 			</div>
@@ -59,15 +54,6 @@
 	</div>
 	<div class="container">
 		<table class="table">
-			<%-- 	<c:choose>
-				<c:when test="{fn:length(list)>0">
-					<c:forEach items="${list}" var="row">
-						<tr>
-							<td>${row}</td>
-						</tr>
-					</c:forEach>
-				</c:when>
-			</c:choose> --%>
 			<tr>
 				<th>Project Code</th>
 				<th>Project Name</th>
@@ -80,7 +66,7 @@
 			<c:forEach items="${list}" var="project">
 				<tr>
 					<td>${project.PRJ_CODE}</td>
-					<td><a href='/project/read?PRJ_CODE=${project.PRJ_CODE}'>${project.PRJ_NAME}</a></td>
+					<td><a href='/project/read${pageMaker.makeSearch(pageMaker.criteria.page)}&PRJ_CODE=${project.PRJ_CODE}'>${project.PRJ_NAME}</a></td>
 					<td>${project.PM}</td>
 					<td>${project.CLIENT}</td>
 					<td>${project.START_DATE}</td>
@@ -94,32 +80,31 @@
 			<ul class="pagination">
 
 				<c:if test="${pageMaker.prev}">
-					<li><a href="listAll?page=${pageMaker.startPage - 1}">&laquo;</a></li>
+					<li><a href="listAll${pageMaker.makeSearch(pageMaker.startPage-1)}">&laquo;</a></li>
 				</c:if>
 
 				<c:forEach begin="${pageMaker.startPage }"
 					end="${pageMaker.endPage }" var="idx">
 					<li
 						<c:out value="${pageMaker.criteria.page == idx?'class =active':''}"/>>
-						<a href="listAll?page=${idx}">${idx}</a>
+						<a href="listAll${pageMaker.makeSearch(idx)}">${idx}</a>
 					</li>
 				</c:forEach>
 
 				<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-					<li><a href="listAll?page=${pageMaker.endPage +1}">&raquo;</a></li>
+					<li><a href="listAll${pageMaker.makeSearch(pageMaker.endPage +1)}">&raquo;</a></li>
 				</c:if>
 
 			</ul>
 		</div>
 	</div>
 
-
 	<script>
 		/* 비밀번호 일치 확인 js */
 		function checkPwd() {
 			var f1 = document.getElementById('memberRegistForm');
 			var pw1 = f1.memberPwd1.value;
-			var pw2 = f1.memberPwd2.value;
+			var pw2 = f1.memberPwd2.value;	
 			var check = document.getElementById('checkPwd');
 			if ((pw1.length == 0) && (pw2.length == 0)) {
 				check.innerHTML = "";
@@ -131,6 +116,25 @@
 				check.innerHTML = "암호가 확인되었습니다.";
 			}
 		}
+		
+		$(document).ready(function(){
+			$("#searchBtn").on(
+				"click",
+				function(event){
+					self.location = "listAll"
+									+ '${pageMaker.makeQuery(1)}'
+									+ "&searchType="
+									+ $("select option:selected").val()
+									+ "&keyword=" + $('#keyword').val();
+				});
+			
+			$("#keyword").keypress(function(key){
+				if(key.keyCode == 13){
+					$('#searchBtn').click();
+					return false;
+				}
+			});
+		});
 	</script>
 </body>
 </html>

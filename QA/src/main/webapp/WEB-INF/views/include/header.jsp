@@ -1,13 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<meta charset="UTF-8">
 <title>Quality Assurance System</title>
 <meta
 	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
 	name='viewport'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- Bootstrap 3.3.4 -->
-<link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet"
-	type="text/css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <!-- Font Awesome Icons -->
 <link
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
@@ -23,36 +25,37 @@
          folder instead of downloading all of them to reduce the load. -->
 <link href="/resources/dist/css/skins/_all-skins.min.css"
 	rel="stylesheet" type="text/css" />
-
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-header">
-		<a class="navbar-brand" href="/">NEXGEN</a>
+		<a class="navbar-brand" href="#">NEXGEN</a>
 		<!-- 넥스젠 로고 -->
 	</div>
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
-			<li><a href="#">HOME</a>
-			<li><a href="#">PROJECT</a>
+			<li><a href="/">PROJECT</a>
 			<li><a href="/user/mypage">MYPAGE</a>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li><a href="#"><span class="glyphicon glyphicon-bell"></span></a>
 			<li><a data-toggle="modal" href="#selectModal"><span
 					class="glyphicon glyphicon-plus"></span></a>
-			<li class="dropdown"><a class="dropdown-toggle"
-				data-toggle="dropdown" href="#"><span
-					class="glyphicon glyphicon-user"></span></a>
-				<div class="dropdown-menu">
-					<form id="formLogin" class="form container-fluid">
-						<div class="form-group">
-							<label for="id">김기손</label>
-						</div>
-						<div class="form-group">
-							<label for="password">010-6229-0964</label>
-						</div>
-						<button type="button" id="btnLogin" class="btn btn-block">Logout</button>
-					</form>
-				</div></li>
+			<li class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" id="userBtn">
+				<span class="glyphicon glyphicon-user"></span>
+			</a>
+			<c:if test="${login.USER_ID != null}">
+					<div class="dropdown-menu">
+						<form id="formLogin" class="form container-fluid">
+							<div class="form-group">
+								<label for="name">${login.USER_NAME}</label>
+							</div>
+							<div class="form-group">
+								<label for="password">${login.USER_PHONE }</label>
+							</div>
+							<button type="button" id="btnLogin" class="btn btn-block" onclick="location.href='/user/logout'">Logout</button>
+						</form>
+					</div>
+				</c:if></li>
 		</ul>
 	</div>
 </nav>
@@ -90,35 +93,36 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<form id="prjRegisterForm" role="form" action="/project/register" method="post">
+				<form id="prjRegisterForm" role="form" action="/project/register"
+					method="post">
 					<div class="form-group">
 						<label for="PRJ_NAME"> <span
 							class="glyphicon glyphicon-pushpin"></span>&nbsp;NAME
-						</label> <input type="text" class="form-control" id="PRJ_NAME"
+						</label> <input type="text" class="form-control" id="PRJ_NAME" name="PRJ_NAME"
 							placeholder="INSERT PROJECT NAME">
 					</div>
 					<div class="form-group">
 						<label for="START_DATE"> <span
 							class="glyphicon glyphicon-pushpin"></span>&nbsp;START DATE
-						</label> <input type="text" class="form-control" id="START_DATE"
+						</label> <input type="text" class="form-control" id="START_DATE" name="START_DATE"
 							placeholder="INSERT START DATE">
 					</div>
 					<div class="form-group">
 						<label for="END_DATE"> <span
 							class="glyphicon glyphicon-pushpin"></span>&nbsp;END DATE
-						</label> <input type="text" class="form-control" id="END_DATE"
+						</label> <input type="text" class="form-control" id="END_DATE" name="END_DATE"
 							placeholder="INSERT END DATE">
 					</div>
 					<div class="form-group">
 						<label for="PRJ_CLIENT"> <span
 							class="glyphicon glyphicon-pushpin"></span>&nbsp;CLIENT
-						</label> <input type="text" class="form-control" id="PRJ_CLIENT"
+						</label> <input type="text" class="form-control" id="CLIENT" name="CLIENT"
 							placeholder="INSERT CLIENT">
 					</div>
 					<div class="form-group">
 						<label for="prjPm"> <span
 							class="glyphicon glyphicon-pushpin"></span>&nbsp;PM
-						</label> <input type="text" class="form-control" id="prjPm"
+						</label> <input type="text" class="form-control" id="PM" name="PM"
 							placeholder="INSERT PM">
 					</div>
 					<button type="submit" class="btn btn-block btn-success">
@@ -138,7 +142,6 @@
 		</div>
 	</div>
 </div>
-
 
 
 <!-- open the member registration modal -->
@@ -208,3 +211,15 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function(){
+		$("#userBtn").click(function(){
+			var session = "${login.USER_CODE}";
+			if(!session){
+				$(location).attr("href", "/user/login");
+				return true;
+			}
+		});
+	});
+</script>

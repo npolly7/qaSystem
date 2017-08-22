@@ -15,7 +15,9 @@
   	
   	<select id="selectProject" resultType="com.project.qa.domain.Project">
 		SELECT
-			*
+			PRJ_CODE, PRJ_NAME, PM, CLIENT, DATE_FORMAT(START_DATE, '%Y-%m-%d') AS START_DATE,
+			DATE_FORMAT(END_DATE, '%Y-%m-%d') AS END_DATE, DATE_FORMAT(UPDT_DATE, '%Y-%m-%d') AS UPDT_DATE,
+			ATT_USER
 		FROM
 			T_PRJ_LIST
 		WHERE
@@ -26,7 +28,7 @@
 		UPDATE
 			T_PRJ_LIST
 		SET
-			PRJ_NAME = #{PRJ_NAME}, ATT_USER = #{ATT_USER}, UPDT_DATE = now()
+			PRJ_NAME = #{PRJ_NAME}, PM = #{PM}, START_DATE = #{START_DATE}, END_DATE = #{END_DATE}, ATT_USER = #{ATT_USER}, UPDT_DATE = now()
 		WHERE
 			PRJ_CODE = #{PRJ_CODE}
 	</update>
@@ -41,7 +43,9 @@
 	<select id="listAll" resultType="com.project.qa.domain.Project">
 	<![CDATA[
 		SELECT
-			*
+			PRJ_CODE, PRJ_NAME, PM, CLIENT, DATE_FORMAT(START_DATE, '%Y-%m-%d') AS START_DATE,
+			DATE_FORMAT(END_DATE, '%Y-%m-%d') AS END_DATE, DATE_FORMAT(UPDT_DATE, '%Y-%m-%d') AS UPDT_DATE,
+			ATT_USER
 		FROM
 			T_PRJ_LIST
 		ORDER BY PRJ_CODE DESC, WR_DATE DESC
@@ -51,7 +55,9 @@
 	<select id="listCriteria" resultType="com.project.qa.domain.Project">
 	<![CDATA[
 		SELECT
-			*
+			PRJ_CODE, PRJ_NAME, PM, CLIENT, DATE_FORMAT(START_DATE, '%Y-%m-%d') AS START_DATE,
+			DATE_FORMAT(END_DATE, '%Y-%m-%d') AS END_DATE, DATE_FORMAT(UPDT_DATE, '%Y-%m-%d') AS UPDT_DATE,
+			ATT_USER
 		FROM
 			T_PRJ_LIST
 		WHERE
@@ -63,7 +69,44 @@
 	]]>
 	</select>
 	
-		<select id="countPaging" resultType="int">
+	<select id="listSearch" resultType="com.project.qa.domain.Project">
+	<![CDATA[
+		SELECT
+			PRJ_CODE, PRJ_NAME, PM, CLIENT, DATE_FORMAT(START_DATE, '%Y-%m-%d') AS START_DATE,
+			DATE_FORMAT(END_DATE, '%Y-%m-%d') AS END_DATE, DATE_FORMAT(UPDT_DATE, '%Y-%m-%d') AS UPDT_DATE,
+			ATT_USER
+		FROM
+			T_PRJ_LIST
+		WHERE
+			PRJ_CODE > 0
+		
+	]]>
+	
+	<include refid="search"></include>
+	
+	<![CDATA[
+		ORDER BY
+			PRJ_CODE DESC, WR_DATE DESC
+		LIMIT
+			#{pageStart}, #{perPageNum}	
+	]]>
+	
+	</select>
+	
+	<select id="listSearchCount" resultType="int">
+	<![CDATA[
+		SELECT
+			COUNT(PRJ_CODE)
+		FROM
+			T_PRJ_LIST
+		WHERE
+			PRJ_CODE > 0
+	]]>
+	<include refid="search"></include>
+	
+	</select>
+	
+	<select id="countPaging" resultType="int">
 	<![CDATA[
 		SELECT
 			COUNT(PRJ_CODE)
@@ -73,5 +116,22 @@
 			PRJ_CODE > 0
 	]]>
 	</select>
+	
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'nm'.toString()">
+				AND PRJ_NAME LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'pm'.toString()">
+				AND PM LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'cd'.toString()">
+				AND PRJ_CODE LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'ct'.toString()">
+				AND CLIENT LIKE CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
   
   </mapper>
