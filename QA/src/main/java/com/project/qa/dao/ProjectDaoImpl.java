@@ -1,6 +1,8 @@
 package com.project.qa.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -60,10 +62,40 @@ public class ProjectDaoImpl implements ProjectDao {
 	public List<Project> listSearch(SearchCriteria criteria) throws Exception {
 		return sqlSession.selectList(namespace + ".listSearch", criteria);
 	}
+	
+	@Override
+	public List<Project> listSearchForMyPage(SearchCriteria criteria, String USER_CODE) throws Exception {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("pageStart", criteria.getPageStart());
+		paramMap.put("perPageNum", criteria.getPerPageNum());
+		paramMap.put("keyword", criteria.getKeyword());
+		paramMap.put("searchType", criteria.getSearchType());
+		paramMap.put("USER_CODE", USER_CODE);
+		return sqlSession.selectList(namespace + ".listSearchForMyPage", paramMap);
+	}
 
 	@Override
 	public int listSearchCount(SearchCriteria criteria) throws Exception {
 		return sqlSession.selectOne(namespace + ".listSearchCount", criteria);
 	}
+	
+	@Override
+	public int listSearchCountForMyPage(SearchCriteria criteria, String USER_CODE) throws Exception {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("pageStart", criteria.getPageStart());
+		paramMap.put("perPageNum", criteria.getPerPageNum());
+		paramMap.put("keyword", criteria.getKeyword());
+		paramMap.put("searchType", criteria.getSearchType());
+		paramMap.put("USER_CODE", USER_CODE);
+		return sqlSession.selectOne(namespace + ".listSearchCountForMyPage", paramMap);
+	}
 
+	@Override
+	public void addLikeUser(String aTTR_USER, int pRJ_CODE) throws Exception {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("PRJ_CODE", pRJ_CODE);
+		paramMap.put("ATTR_USER", aTTR_USER);
+		
+		sqlSession.update(namespace + ".addLikeUser", paramMap);
+	}
 }

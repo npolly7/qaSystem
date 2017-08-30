@@ -30,8 +30,8 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public User selectUser(String USER_ID) throws Exception {
-		return (User)sqlSession.selectOne(namespace + ".selectUser", USER_ID);
+	public User selectUser(String USER_CODE) throws Exception {
+		return (User)sqlSession.selectOne(namespace + ".selectUser", USER_CODE);
 	}
 
 	@Override
@@ -47,5 +47,14 @@ public class UserDaoImpl implements UserDao{
 	public User login(LoginDto dto) throws Exception {
 		return (User)sqlSession.selectOne(namespace + ".login", dto);
 	}
+
+	@Override
+	public void addLikeUser(String uSER_CODE, String aTTR_PRJ) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("ATTR_PRJ", aTTR_PRJ);
+		paramMap.put("USER_CODE", uSER_CODE);
+		sqlSession.update(namespace +".addLikePrj", paramMap);
+	}
+
 
 }

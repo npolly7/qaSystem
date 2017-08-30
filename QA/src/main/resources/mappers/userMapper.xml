@@ -23,7 +23,7 @@
 			*
 		FROM
 			T_USER_LIST
-		WHERE USER_ID = #{USER_ID}
+		WHERE USER_CODE = #{USER_CODE}
 	</select>  
 	
 	<select id="login" resultType="com.project.qa.domain.User">
@@ -34,5 +34,14 @@
 		WHERE
 			USER_ID = #{USER_ID} AND USER_PW = #{USER_PW}
 	</select>
+	
+	<update id="addLikePrj">
+		UPDATE
+			T_USER_LIST
+		SET
+			ATTR_PRJ = #{ATTR_PRJ}
+		WHERE
+			USER_CODE = #{USER_CODE}
+	</update>
 	
   </mapper>

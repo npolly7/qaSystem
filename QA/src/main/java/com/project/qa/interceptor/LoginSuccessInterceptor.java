@@ -26,10 +26,10 @@ public class LoginSuccessInterceptor extends HandlerInterceptorAdapter {
 			logger.info("new login success");
 			session.setAttribute(LOGIN, user);
 			Object dest = session.getAttribute("dest");
-			logger.info((String)dest);
 			response.sendRedirect(dest != null ? (String) dest : "/");
 		}
 	}
+	
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
@@ -39,7 +39,6 @@ public class LoginSuccessInterceptor extends HandlerInterceptorAdapter {
 			logger.info("clear login data before");
 			session.removeAttribute(LOGIN);
 		}
-		
 		return true;
 	}
 }

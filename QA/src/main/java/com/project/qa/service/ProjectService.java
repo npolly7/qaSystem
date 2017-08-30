@@ -21,9 +21,15 @@ public interface ProjectService {
 	public List<Project> listCriteria(Criteria criteria) throws Exception;
 	
 	public int listCountCriteria(Criteria criteria) throws Exception;
+
+	public int listSearchCountForMyPage(SearchCriteria criteria, String USER_CODE) throws Exception;
 	
 	public List<Project> listSearchCriteria(SearchCriteria criteria) throws Exception;
 	
+	public List<Project> ListSearchCriteriaForMyPage(SearchCriteria criteria, String USER_CODE) throws Exception;
+	
 	public int listSearchCount(SearchCriteria criteria) throws Exception;
+
+	public void addLikeUser(String aTTR_USER, int pRJ_CODE) throws Exception;
 
 }

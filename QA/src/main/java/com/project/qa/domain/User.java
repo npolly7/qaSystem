@@ -3,7 +3,7 @@ package com.project.qa.domain;
 import java.util.Date;
 
 public class User {
-	private int USER_CODE;
+	private String USER_CODE;
 	private String USER_ID;
 	private String USER_PW;
 	private String USER_NAME;
@@ -11,13 +11,18 @@ public class User {
 	private String USER_BIRTH;
 	private Date WR_DATE;
 	private Date UPDT_DATE;
+	private String ATTR_PRJ;
 	
-	
-	
-	public int getUSER_CODE() {
+	public String getATTR_PRJ() {
+		return ATTR_PRJ;
+	}
+	public void setATTR_PRJ(String aTTR_PRJ) {
+		ATTR_PRJ = aTTR_PRJ;
+	}
+	public String getUSER_CODE() {
 		return USER_CODE;
 	}
-	public void setUSER_CODE(int uSER_CODE) {
+	public void setUSER_CODE(String uSER_CODE) {
 		USER_CODE = uSER_CODE;
 	}
 	
@@ -66,9 +71,9 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [USER_ID=" + USER_ID + ", USER_PW=" + USER_PW + ", USER_NAME="
+		return "User [USER_CODE=" + USER_CODE + ", USER_ID=" + USER_ID + ", USER_PW=" + USER_PW + ", USER_NAME="
 				+ USER_NAME + ", USER_PHONE=" + USER_PHONE + ", USER_BIRTH=" + USER_BIRTH + ", WR_DATE=" + WR_DATE
-				+ ", UPDT_DATE=" + UPDT_DATE + "]";
+				+ ", UPDT_DATE=" + UPDT_DATE + ", ATTR_PRJ=" + ATTR_PRJ + "]";
 	}
 	
 }

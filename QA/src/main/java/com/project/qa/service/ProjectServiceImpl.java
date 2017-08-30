@@ -1,5 +1,6 @@
 package com.project.qa.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -62,5 +63,32 @@ public class ProjectServiceImpl implements ProjectService{
 	public int listSearchCount(SearchCriteria criteria) throws Exception {
 		return projectDao.listSearchCount(criteria);
 	}
+	
+	@Override
+	public int listSearchCountForMyPage(SearchCriteria criteria, String USER_CODE) throws Exception {
+		return projectDao.listSearchCountForMyPage(criteria, USER_CODE);
+	}
 
+	@Override
+	public void addLikeUser(String aTTR_USER, int pRJ_CODE) throws Exception {
+		projectDao.addLikeUser(aTTR_USER, pRJ_CODE);
+	}
+
+	@Override
+	public List<Project> ListSearchCriteriaForMyPage(SearchCriteria criteria, String USER_CODE) throws Exception {
+
+//		List<Project> projectList = new ArrayList<Project>();
+//		List<Project> tmpPrjList = projectDao.listSearch(criteria);
+//		
+//		for(int i=0; i<tmpPrjList.size(); i++) {
+//			Project tmpProject = tmpPrjList.get(i);
+//			
+//			for(int j=0; j<attrPrjArr.length; j++) {
+//				if(attrPrjArr[j].equals(tmpProject.getPRJ_CODE())){
+//					projectList.add(tmpProject);
+//				}
+//			}
+//		}
+		return projectDao.listSearchForMyPage(criteria, USER_CODE);
+	}
 }
