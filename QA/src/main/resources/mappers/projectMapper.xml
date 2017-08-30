@@ -106,6 +106,44 @@
 	
 	</select>
 	
+	<select id="listSearchCountForMyPage" resultType="int">
+	<![CDATA[
+		SELECT
+			COUNT(PRJ_CODE)
+		FROM
+			T_PRJ_LIST
+		WHERE
+			PRJ_CODE > 0
+		AND
+			ATT_USER LIKE CONCAT('%', #{USER_CODE}, '%')
+	]]>
+		<include refid="search"></include>
+	</select>
+	
+	<select id="listSearchForMyPage" resultType="com.project.qa.domain.Project">
+	<![CDATA[
+		SELECT
+			PRJ_CODE, PRJ_NAME, PM, CLIENT, DATE_FORMAT(START_DATE, '%Y-%m-%d') AS START_DATE,
+			DATE_FORMAT(END_DATE, '%Y-%m-%d') AS END_DATE, DATE_FORMAT(UPDT_DATE, '%Y-%m-%d') AS UPDT_DATE,
+			ATT_USER
+		FROM
+			T_PRJ_LIST
+		WHERE
+			PRJ_CODE > 0
+	]]>
+	
+	<include refid="search"></include>
+	
+	<![CDATA[	
+		AND
+			ATT_USER LIKE CONCAT('%', #{USER_CODE}, '%')
+		ORDER BY
+			PRJ_CODE DESC, WR_DATE DESC
+		LIMIT
+			#{pageStart}, #{perPageNum}	
+	]]>
+	</select>
+	
 	<select id="countPaging" resultType="int">
 	<![CDATA[
 		SELECT
@@ -116,6 +154,15 @@
 			PRJ_CODE > 0
 	]]>
 	</select>
+	
+	<update id="addLikeUser">
+		UPDATE
+			T_PRJ_LIST
+		SET
+			ATT_USER = #{ATTR_USER}
+		WHERE
+			PRJ_CODE = #{PRJ_CODE}
+	</update>
 	
 	<sql id="search">
 		<if test="searchType != null">
@@ -133,5 +180,6 @@
 			</if>
 		</if>
 	</sql>
+	
   
   </mapper>

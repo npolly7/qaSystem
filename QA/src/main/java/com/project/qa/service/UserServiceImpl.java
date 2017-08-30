@@ -12,11 +12,21 @@ import com.project.qa.dto.LoginDto;
 public class UserServiceImpl implements UserService{
 
 	@Inject
-	private UserDao dao;
+	private UserDao userDao;
 	
 	@Override
 	public User login(LoginDto dto) throws Exception {
-		return dao.login(dto);
+		return userDao.login(dto);
+	}
+
+	@Override
+	public void addLikePrj(String uSER_CODE, String aTTR_PRJ) throws Exception {
+		userDao.addLikeUser(uSER_CODE, aTTR_PRJ);
+	}
+
+	@Override
+	public User read(String USER_CODE) throws Exception {
+		return userDao.selectUser(USER_CODE);
 	}
 	
 }

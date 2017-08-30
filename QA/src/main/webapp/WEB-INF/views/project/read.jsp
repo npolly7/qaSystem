@@ -79,16 +79,36 @@
 		<input type='hidden' name='UPDT_USER' value="${login.USER_CODE}">
 		<input type='hidden' name='state'>
 		<table class="table">
+			<colgroup>
+				<col width="2%" />
+            		<col width="4%" />
+            		<col width="8%" />
+            		<col width="8%" />
+            		<col width="8%" />
+            		<col width="*" />
+            		<col width="7%" />
+            		<col width="7%" />
+            		<col width="8%" />
+            		<col width="8%" />
+            		<col width="8%" />
+            		<col width="8%" />
+            		<col width="4%" />
+        		</colgroup>
 			<thead>
 				<tr>
-					<th>CHECK</th>
-					<th>CODE</th>
-					<th>NAME</th>
-					<th>CONTENTS</th>
-					<th>WRITER</th>
-					<th>UPDATE_USER</th>
-					<th>UPDATE_DATE</th>
-					<th>STATE</th>
+					<th scope="col"> </th>
+					<th scope="col">CODE</th>
+					<th scope="col">기능No</th>
+					<th scope="col">기능명</th>
+					<th scope="col">시험항목</th>
+					<th scope="col">시험내용</th>
+					<th scope="col">최초작성자</th>
+					<th scope="col">최종수정자</th>
+					<th scope="col">계획일</th>
+					<th scope="col">시험일</th>
+					<th scope="col">갱신일</th>
+					<th scope="col">작성일</th>
+					<th scope="col">상태</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -108,10 +128,15 @@
 					<td><input type="checkbox" name="TC_CODE" id="TC_CODE"
 						value="${testCase.TC_CODE}" /></td>
 					<td>${testCase.TC_CODE}</td>
+					<td>${testCase.FUNC_NO}</td>
+					<td>${testCase.FUNC_NAME}</td>
 					<td>${testCase.TC_NAME}</td>
 					<td>${testCase.CONTENTS}</td>
 					<td>${testCase.TC_WRITER}</td>
 					<td>${testCase.UPDT_USER }</td>
+					<td>${testCase.TEST_PLAN}</td>
+					<td>${testCase.TEST_DATE}</td>
+					<td>${testCase.WR_DATE}</td>
 					<td>${testCase.UPDT_DATE}</td>
 					<c:if test="${testCase.STATE == 1}">
 						<td>일반</td>
@@ -123,14 +148,13 @@
 						<td>완료</td>
 					</c:if>
 					<c:if test="${testCase.STATE == 4}">
-						<td>재검토</td>
+						<td>재검</td>
 					</c:if>
 					</tr>
 				</c:forEach>
 
 			</tbody>
 		</table>
-
 
 	</form>
 	<div class="box-footer2">
@@ -162,7 +186,7 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<form id="addTcForm" role="form" action="/project/testCase/add"
+				<form id="addTcForm" action="/project/testCase/add"
 					method="post">
 					<input type="hidden" id="PRJ_CODE" name="PRJ_CODE"
 						value="${project.PRJ_CODE}"> <input type="hidden"
@@ -201,7 +225,6 @@
 </div>
 
 
-
 <div id="removeConfirmModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 
@@ -223,7 +246,6 @@
 
 	</div>
 </div>
-
 <div id="removeTcConfirmModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 
@@ -292,6 +314,7 @@
 		$("#addTcBtn").on("click", function() {
 			$("#addTestCaseModal").modal();
 			});
+		
 		$("#modifyTcBtn").on("click", function() {
 			formObj.attr("action", "/project/testCase/modify");
 			formObj.attr("method", "get");
@@ -340,5 +363,6 @@
 			$("#requestTcStateModal").modal();
 			});
 		});
+	
 </script>
 
